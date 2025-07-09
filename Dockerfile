@@ -1,8 +1,8 @@
 # Giai đoạn build
 FROM ubuntu:latest AS build
 
-# Cập nhật và cài đặt OpenJDK 17
-RUN apt-get update && apt-get install -y openjdk-17-jdk maven
+# Cập nhật và cài đặt OpenJDK 21 và Maven
+RUN apt-get update && apt-get install -y openjdk-21-jdk maven
 
 # Sao chép toàn bộ mã nguồn vào container
 COPY . .
@@ -11,7 +11,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Giai đoạn chạy ứng dụng
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 # Mở cổng 8080
 EXPOSE 8080
