@@ -21,7 +21,7 @@ public class GoogleSheetsConfig {
 
     private static final String APPLICATION_NAME = "PushTrend";
 
-    @Value("${google.credentials.localpath}")
+    @Value("${google.credentials.path}")
     private String credentialsPath;
 
     @Bean
