@@ -1,23 +1,23 @@
-# Use Maven for building the project
-FROM maven:3.9.2-eclipse-temurin-17 AS builder
+# Giai đoạn build
+FROM ubuntu:latest AS build
 
-# Set working directory
-WORKDIR /app
+# Cập nhật và cài đặt OpenJDK 17
+RUN apt-get update && apt-get install -y openjdk-17-jdk maven
 
-# Copy mã nguồn ứng dụng Spring Boot vào thư mục /app trong stage tạm thời
-COPY . /app
+# Sao chép toàn bộ mã nguồn vào container
+COPY . .
 
-# Build the project
-RUN mvn package -DskipTests
+# Chạy lệnh Maven để build ứng dụng
+RUN mvn clean package -DskipTests
 
-# check jar existed
-RUN ls -la target
+# Giai đoạn chạy ứng dụng
+FROM openjdk:17-jdk-slim
 
-# Use OpenJDK for running the JAR
-FROM openjdk:17
+# Mở cổng 8080
+EXPOSE 8080
 
-# Copy the built JAR from the builder stage
-COPY --from=builder /app/target/jimmysea.jar /jimmysea.jar
+# Sao chép file JAR từ giai đoạn build
+COPY --from=build /target/*.jar jimmysea.jar
 
-# Specify the command to run on container startup
+# Chạy ứng dụng
 ENTRYPOINT ["java", "-jar", "jimmysea.jar"]
