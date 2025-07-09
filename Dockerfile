@@ -20,4 +20,4 @@ FROM openjdk:17
 COPY --from=builder /app/target/jimmysea.jar /jimmysea.jar
 
 # Specify the command to run on container startup
-ENTRYPOINT ["java", "-jar", "IMS_Backend-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "jimmysea.jar"]
