@@ -33,7 +33,7 @@ build/
 .vscode/
 
 #token
-tokens
+/tokens
 
 #resources
 src/main/resources/credentials.json
